@@ -5,7 +5,7 @@
 ---@field _line_objects LineObject[]
 local Draw3D = class("Draw3D")
 
----@param self Draw
+---@param self Draw3D
 ---@param world World e.g `Managers.world:world("level_world"))`
 Draw3D.init = function(self, world)
 	self._world = world
@@ -13,7 +13,7 @@ Draw3D.init = function(self, world)
     self._line_objects = {}
 end
 
----@param self Draw
+---@param self Draw3D
 ---@return LineObject?
 Draw3D.create_line = function(self)
     local line_object = World.create_line_object(self._world)
@@ -23,17 +23,17 @@ Draw3D.create_line = function(self)
     return line_object
 end
 
----@param self Draw
+---@param self Draw3D
 Draw3D.enable = function(self)
 	self._enabled = true
 end
 
----@param self Draw
+---@param self Draw3D
 Draw3D.disable = function(self)
 	self._enabled = false
 end
 
----@param self Draw
+---@param self Draw3D
 Draw3D.update = function(self)
 	if self._enabled then
         for _, line_object in ipairs(self._line_objects) do
@@ -42,7 +42,7 @@ Draw3D.update = function(self)
     end
 end
 
----@param self Draw
+---@param self Draw3D
 ---@param from Vector3
 ---@param to Vector3
 ---@param color Vector4? ARGB. Default: White (255, 255, 255, 255)
@@ -57,7 +57,7 @@ Draw3D.line = function(self, from, to, color)
     return line_object
 end
 
----@param self Draw
+---@param self Draw3D
 ---@param center Vector3
 ---@param radius number
 ---@param color Vector4? ARGB. Default: White (255, 255, 255, 255)
@@ -76,7 +76,7 @@ Draw3D.sphere = function(self, center, radius, color, segments, parts)
     return line_object
 end
 
----@param self Draw
+---@param self Draw3D
 ---@param from Vector3
 ---@param to Vector3
 ---@param radius number
@@ -98,7 +98,7 @@ Draw3D.capsule = function(self, from, to, radius, color, segments, circles, bars
     return line_object
 end
 
----@param self Draw
+---@param self Draw3D
 ---@param pose Matrix4x4
 ---@param extents Vector3
 ---@param color Vector4 ARGB. Default: White (255, 255, 255, 255)
@@ -113,7 +113,7 @@ Draw3D.box = function(self, pose, extents, color)
     return line_object
 end
 
----@param self Draw
+---@param self Draw3D
 ---@param center Vector3 The center point of the circle.
 ---@param radius number The radius of the circle.
 ---@param normal Vector3 The normal vector
@@ -131,7 +131,7 @@ Draw3D.circle = function(self, center, radius, normal, color, segments)
     return line_object
 end
 
----@param self Draw
+---@param self Draw3D
 ---@param from Vector3
 ---@param to Vector3
 ---@param radius number
@@ -152,7 +152,7 @@ Draw3D.cone = function(self, from, to, radius, color, segments, bars)
 end
 
 ---Dispatch all line objects
----@param self Draw
+---@param self Draw3D
 Draw3D.destroy_all = function(self)
 	for index, line_object in ipairs(self._line_objects) do
         LineObject.dispatch(self._world, line_object)
