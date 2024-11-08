@@ -16,6 +16,8 @@ end
 ---@param self Draw3D
 ---@return LineObject?
 Draw3D.create_line = function(self)
+    if not self._world then return nil end
+
     local line_object = World.create_line_object(self._world)
     if line_object then
         self._line_objects[#self._line_objects + 1] = line_object
@@ -40,6 +42,11 @@ Draw3D.update = function(self)
             LineObject.reset(line_object)
         end
     end
+end
+
+---@param self Draw3D
+Draw3D.destroy = function(self)
+	self:destroy_all()
 end
 
 ---@param self Draw3D
