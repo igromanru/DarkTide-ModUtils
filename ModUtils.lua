@@ -59,11 +59,19 @@ function ModUtils.get_villains_side()
 	return ModUtils.get_side_by_name("villains")
 end
 
----@return HumanPlayer?
-function ModUtils.get_local_player()
-	if not Managers.player then return nil end
+---@return Unit[]
+function ModUtils.get_enemy_units()
+    local player_side = ModUtils.get_heroes_side()
+	return player_side and player_side:relation_units("enemy") or {}
+end
 
-	return Managers.player:local_player(1)
+---@param index integer? Default: 1 (my player)
+---@return HumanPlayer?
+function ModUtils.get_local_player(index)
+	if not Managers.player then return nil end
+	index = index or 1
+
+	return Managers.player:local_player(index)
 end
 
 ---@return Unit?
@@ -72,10 +80,5 @@ function ModUtils.get_local_player_unit()
     return local_player and local_player.player_unit
 end
 
----@return Unit[]
-function ModUtils.get_enemy_units()
-    local player_side = ModUtils.get_heroes_side()
-	return player_side and player_side:relation_units("enemy") or {}
-end
 
 return ModUtils
