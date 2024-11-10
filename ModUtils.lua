@@ -29,10 +29,10 @@ function ModUtils.get_side_by_unit(unit)
 	return side_system and side_system.side_by_unit[unit]
 end
 
----@param side_id integer
+---@param side_id integer? Default: 1 (players side aka. "heroes")
 ---@return Side?
 function ModUtils.get_side(side_id)
-	if type(side_id) ~= "number" then return nil end
+	side_id = side_id or 1
 
 	local side_system = ModUtils.get_side_system() 
 	return side_system and side_system:get_side(side_id)
@@ -50,19 +50,27 @@ end
 ---Get players side
 ---@return Side?
 function ModUtils.get_heroes_side()
-	return ModUtils.get_side_by_name("heroes")
+	return ModUtils.get_side(1)
+	-- return ModUtils.get_side_by_name("heroes")
 end
 
 ---Get enemies side
 ---@return Side?
 function ModUtils.get_villains_side()
-	return ModUtils.get_side_by_name("villains")
+	return ModUtils.get_side(2)
+	-- return ModUtils.get_side_by_name("villains")
 end
 
 ---@return Unit[]
 function ModUtils.get_enemy_units()
     local player_side = ModUtils.get_heroes_side()
 	return player_side and player_side:relation_units("enemy") or {}
+end
+
+---@return { Unit: unknown }
+function ModUtils.get_enemy_units_lookup()
+    local player_side = ModUtils.get_heroes_side()
+	return player_side and player_side.enemy_units_lookup or {}
 end
 
 ---@param index integer? Default: 1 (my player)
