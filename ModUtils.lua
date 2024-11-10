@@ -74,9 +74,10 @@ function ModUtils.get_local_player(index)
 	return Managers.player:local_player(index)
 end
 
+---@param index integer? Default: 1 (my player)
 ---@return Unit?
-function ModUtils.get_local_player_unit()
-    local local_player = ModUtils.get_local_player()
+function ModUtils.get_local_player_unit(index)
+    local local_player = ModUtils.get_local_player(index)
     return local_player and local_player.player_unit
 end
 
