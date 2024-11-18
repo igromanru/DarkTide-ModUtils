@@ -89,5 +89,28 @@ function ModUtils.get_local_player_unit(index)
     return local_player and local_player.player_unit
 end
 
+---@param unit Unit
+---@return table?
+function ModUtils.get_unit_breed_tags(unit)
+	if not unit then return nil end
+
+	local enemy_unit_data_extension = ScriptUnit.extension(unit, "unit_data_system")
+	if enemy_unit_data_extension then
+		local breed = enemy_unit_data_extension:breed()
+		return breed and breed.tags
+	end
+	return nil
+end
+
+---Returns true if enemy is a specialist, elite, captain or monster
+---@param enemy_unit Unit
+---@return boolean is_threat
+function ModUtils.is_threat_enemy_unit(enemy_unit)
+	if not enemy_unit then return false end
+
+	local breed_tags = ModUtils.get_unit_breed_tags(enemy_unit)
+    return (breed_tags and (breed_tags.special or breed_tags.elite or breed_tags.captain or breed_tags.monster)) == true
+end
+
 
 return ModUtils
