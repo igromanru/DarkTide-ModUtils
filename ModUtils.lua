@@ -79,7 +79,7 @@ function ModUtils.get_local_player(index)
 	if not Managers.player then return nil end
 	index = index or 1
 
-	return Managers.player:local_player(index)
+	return Managers.player:local_player_safe(index)
 end
 
 ---@param index integer? Default: 1 (my player)
